@@ -17,7 +17,7 @@ public class CalculService {
 		for(String part:parts){
 			try{
 			somme = somme + Integer.parseInt(part);
-			} catch (NumberFormatException e){
+			} catch (Exception e){
 				throw new CalculException();
 			}
 		}
