@@ -23,7 +23,7 @@
 	</appender>
 
 	<!-- politique de log pour les classes du package dev.console -->
-	<logger name="dev.console" level="INFO">
+	<logger name="dev.console" level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</logger>
 

@@ -1,6 +1,7 @@
 package dev.console;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
+import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +26,9 @@ public class AppTest {
 
 	@Rule
 	public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+	
+	@Rule
+	public TextFromStandardInputStream systemInMock = emptyStandardInputStream();
 
 	private App app;
 
@@ -66,5 +72,14 @@ public class AppTest {
 		this.app.evaluer(expression);
 		LOG.info("Alors dans la console, s'affiche l'expression {} est invalide.", expression);
 		assertThat(systemOutRule.getLog()).contains("L'expression " + expression + " est invalide.");
+	}
+	
+	@Test
+	public void testFermer() throws Exception {
+		LOG.info("Lorsque l'utilisateur tape fin");
+		app.demarrer();		
+		systemInMock.provideLines("fin");
+		LOG.info("Alors dans la console, s'affiche au revoir");
+		assertThat(systemOutRule.getLog()).contains("Aurevoir :-(");
 	}
 }
