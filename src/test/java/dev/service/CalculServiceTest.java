@@ -27,13 +27,12 @@ public class CalculServiceTest {
 	@Test
 	public void testAdditionner() throws Exception {
 		LOG.info("Etant donné, une instance de la classe CalculService"); 
-		//TODO
+		CalculService calculService = new CalculService();
 		LOG.info("Lorsque j'évalue l'addition de l'expression 1+3+4"); 
 		//TODO
-		int somme = 0;
+		int somme = calculService.additionner("1+3+4");
 		LOG.info("Alors j'obtiens le résultat 8");
-		// TODO
-		fail("Not yet implemented");
+		assertTrue(somme == 8);
 	}
 
 }
