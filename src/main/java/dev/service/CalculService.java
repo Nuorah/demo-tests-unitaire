@@ -3,15 +3,25 @@ package dev.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dev.exception.CalculException;
+
 public class CalculService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(CalculService.class);
 	
 	public int additionner(String expression) {
-		// TODO Ajouter un log en niveau DEBUG affichant "Evaluation de l'expression <expression>".
-		// TODO par exemple "Evaluation de l'expression 1+4"
+		
 		LOG.debug("Evaluation de l'expression {}", expression);
-		return 0;
+		String[] parts = expression.split("\\+");
+		int somme = 0;
+		for(String part:parts){
+			try{
+			somme = somme + Integer.parseInt(part);
+			} catch (NumberFormatException e){
+				throw new CalculException();
+			}
+		}
+		return somme;
 	}
 }
 

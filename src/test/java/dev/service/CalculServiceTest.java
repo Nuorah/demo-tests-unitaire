@@ -8,6 +8,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.assertj.core.api.Assertions.*;
+
+import dev.exception.CalculException;
+
+
 /**
 * Test unitaire de la classe dev.service.CalculService.
 */
@@ -28,11 +33,19 @@ public class CalculServiceTest {
 	public void testAdditionner() throws Exception {
 		LOG.info("Etant donné, une instance de la classe CalculService"); 
 		CalculService calculService = new CalculService();
-		LOG.info("Lorsque j'évalue l'addition de l'expression 1+3+4"); 
-		//TODO
+		LOG.info("Lorsque j'évalue l'addition de l'expression 1+3+4");
 		int somme = calculService.additionner("1+3+4");
 		LOG.info("Alors j'obtiens le résultat 8");
-		assertTrue(somme == 8);
+		assertThat(somme).isEqualTo(8);
+	}
+	
+	@Test
+	public void testAdditionnerException() {
+		LOG.info("Etant donné, une instance de la classe CalculService"); 
+		CalculService calculService = new CalculService();
+		LOG.info("Lorsque j'évalue l'addition de l'expression invalide 1*a*4");		
+		LOG.info("Alors j'obtiens une CalculException.");
+		assertThatThrownBy(() -> { calculService.additionner("1*a*4"); }).isInstanceOf(CalculException.class);
 	}
 
 }
